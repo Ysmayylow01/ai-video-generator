@@ -1,0 +1,7 @@
+torch==2.9.1
+imageio==2.27.0
+pillow==10.1.0
+gguf-connector==0.1
+gguf-py
+flask
+logging
