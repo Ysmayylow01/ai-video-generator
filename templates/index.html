@@ -1,10 +1,9 @@
-<!-- templates/index.html -->
 <!DOCTYPE html>
-<html lang="tk">
+<html lang="tk" id="html-root">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Video Generator - Professional</title>
+    <title data-i18n="app_title">AI Video Generator</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -21,13 +20,25 @@
         <div class="container">
             <div class="nav-brand">
                 <i class="fas fa-video"></i>
-                <span>AI Video Generator</span>
+                <span data-i18n="app_title">AI Video Generator</span>
             </div>
             <div class="nav-menu">
-                <a href="#home" class="nav-link active">Baş sahypa</a>
-                <a href="#generator" class="nav-link">Generator</a>
-                <a href="#history" class="nav-link">Taryh</a>
-                <a href="#about" class="nav-link">Barada</a>
+                <a href="#home" class="nav-link active" data-i18n="home">Baş sahypa</a>
+                <a href="#generator" class="nav-link" data-i18n="generator">Generator</a>
+                <a href="#history" class="nav-link" data-i18n="history">Arhiw</a>
+                <a href="#about" class="nav-link" data-i18n="about">Biz barada</a>
+                
+                <!-- Language Switcher -->
+                <div class="language-switcher">
+                    <button class="lang-btn" id="lang-tk" onclick="switchLanguage('tk')" title="Türkmen dili">
+                        <span class="flag">TK</span>
+                        <span class="lang-code">TK</span>
+                    </button>
+                    <button class="lang-btn" id="lang-en" onclick="switchLanguage('en')" title="English">
+                        <span class="flag">EN</span>
+                        <span class="lang-code">EN</span>
+                    </button>
+                </div>
             </div>
         </div>
     </nav>
@@ -37,20 +48,21 @@
         <div class="container">
             <div class="hero-content">
                 <h1 class="hero-title">
-                    <span class="gradient-text">AI bilen Wideo</span> Döretmek
+                    <span data-i18n="hero_title">AI bilen Wideo</span>
+                    <span class="gradient-text" data-i18n="hero_title_highlight">Döretmek</span>
                 </h1>
-                <p class="hero-subtitle">
+                <p class="hero-subtitle" data-i18n="hero_subtitle">
                     Suratlarynyzdan professional wideoler dörediň. Islendik stilleri we hereketi saýlaň.
                 </p>
                 <button class="btn btn-primary btn-lg" onclick="scrollToGenerator()">
                     <i class="fas fa-play-circle"></i>
-                    Başla
+                    <span data-i18n="start_btn">Başla</span>
                 </button>
             </div>
             <div class="hero-image">
                 <div class="floating-card">
                     <i class="fas fa-magic"></i>
-                    <span>AI Powered</span>
+                    <span data-i18n="ai_powered">AI Powered</span>
                 </div>
             </div>
         </div>
@@ -60,8 +72,13 @@
     <section class="generator-section" id="generator">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Wideo <span class="gradient-text">Generator</span></h2>
-                <p class="section-subtitle">Aşakdaky maglumatlary dolduryň we wideonyzy dörediň</p>
+                <h2 class="section-title">
+                    <span data-i18n="generator_title">Wideo</span>
+                    <span class="gradient-text" data-i18n="generator_title_highlight">Generator</span>
+                </h2>
+                <p class="section-subtitle" data-i18n="generator_subtitle">
+                    Aşakdaky maglumatlary dolduryň we wideonyzy dörediň
+                </p>
             </div>
 
             <div class="generator-grid">
@@ -69,108 +86,115 @@
                 <div class="generator-card">
                     <div class="card-header">
                         <i class="fas fa-cog"></i>
-                        <h3>Sazlamalar</h3>
+                        <h3 data-i18n="settings">Sazlamalar</h3>
                     </div>
                     <div class="card-body">
                         <form id="videoForm">
-    <!-- Prompt (Required) -->
-    <div class="form-group">
-        <label for="prompt">
-            <i class="fas fa-pen"></i>
-            Prompt (Düşündiriş) <span class="required">*</span>
-        </label>
-        <textarea 
-            id="prompt" 
-            class="form-control" 
-            rows="4" 
-            placeholder="Mysal: A futuristic cityscape at sunset with flying cars"
-            required
-        ></textarea>
-        <small class="form-hint">Wideonyň näme hakda bolmalydygyny düşündiriň</small>
-    </div>
+                            <!-- Prompt -->
+                            <div class="form-group">
+                                <label for="prompt">
+                                    <i class="fas fa-pen"></i>
+                                    <span data-i18n="prompt_label">Prompt (Düşündiriş)</span>
+                                    <span class="required">*</span>
+                                </label>
+                                <textarea 
+                                    id="prompt" 
+                                    class="form-control" 
+                                    rows="4"
+                                    data-i18n-placeholder="prompt_placeholder"
+                                    placeholder="Mysal: A futuristic cityscape at sunset with flying cars"
+                                    required
+                                ></textarea>
+                                <small class="form-hint" data-i18n="prompt_hint">
+                                    Wideonyň näme hakda bolmalydygyny düşündiriň
+                                </small>
+                            </div>
 
-    <!-- Image URL (Optional) -->
-    <div class="form-group">
-        <label for="imageUrl">
-            <i class="fas fa-image"></i>
-            Surat URL (optional)
-        </label>
-        <input 
-            type="url" 
-            id="imageUrl" 
-            class="form-control" 
-            placeholder="https://example.com/image.jpg (boş goýsaňyz text-to-video)"
-        >
-        <small class="form-hint">Boş goýsaňyz, diňe prompt esasynda wideo dörediler</small>
-    </div>
+                            <!-- Image URL -->
+                            <div class="form-group">
+                                <label for="imageUrl">
+                                    <i class="fas fa-image"></i>
+                                    <span data-i18n="image_url_label">Surat URL</span>
+                                    <span data-i18n="image_url_optional">(optional)</span>
+                                </label>
+                                <input 
+                                    type="url" 
+                                    id="imageUrl" 
+                                    class="form-control"
+                                    data-i18n-placeholder="image_url_placeholder"
+                                    placeholder="https://example.com/image.jpg (boş goýsaňyz text-to-video)"
+                                >
+                                <small class="form-hint" data-i18n="image_url_hint">
+                                    Boş goýsaňyz, diňe prompt esasynda wideo dörediler
+                                </small>
+                            </div>
 
-    <!-- Duration & Resolution Row -->
-    <div class="form-row">
-        <div class="form-group">
-            <label for="duration">
-                <i class="fas fa-clock"></i>
-                Dowamlylygy
-            </label>
-            <select id="duration" class="form-control">
-                <option value="1">1 sekunt</option>
-                <option value="3" selected>3 sekunt</option>
-                <option value="6">6 sekunt</option>
-                <option value="9">9 sekunt</option>
-                <option value="12">12 sekunt</option>
-                <option value="15">15 sekunt</option>
-            </select>
-        </div>
+                            <!-- Duration & Resolution -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="duration">
+                                        <i class="fas fa-clock"></i>
+                                        <span data-i18n="duration_label">Dowamlylygy</span>
+                                    </label>
+                                    <select id="duration" class="form-control">
+                                        <option value="6" data-i18n="duration_1s">6 sekunt</option>
+                                        <option value="10" selected data-i18n="duration_3s">10 sekunt</option>
+                                        <option value="15" data-i18n="duration_6s">15 sekunt</option>
+                                    </select>
+                                </div>
 
-        <div class="form-group">
-            <label for="resolution">
-                <i class="fas fa-tv"></i>
-                Hil
-            </label>
-            <select id="resolution" class="form-control">
-                <option value="480p">480p (Çalt)</option>
-                <option value="720p" selected>720p (HD)</option>
-            </select>
-        </div>
-    </div>
+                                <div class="form-group">
+                                    <label for="resolution">
+                                        <i class="fas fa-tv"></i>
+                                        <span data-i18n="resolution_label">Hil</span>
+                                    </label>
+                                    <select id="resolution" class="form-control">
+                                        <option value="480p" data-i18n="res_480p">480p (Çalt)</option>
+                                        <option value="720p" selected data-i18n="res_720p">720p (HD)</option>
+                                    </select>
+                                </div>
+                            </div>
 
-    <!-- Aspect Ratio & Seed Row -->
-    <div class="form-row">
-        <div class="form-group">
-            <label for="aspectRatio">
-                <i class="fas fa-expand"></i>
-                Aspect Ratio
-            </label>
-            <select id="aspectRatio" class="form-control">
-                <option value="1:1">1:1 (Kwadrat)</option>
-                <option value="16:9" selected>16:9 (Landscape)</option>
-                <option value="9:16">9:16 (Portrait)</option>
-                <option value="4:3">4:3 (Standart)</option>
-                <option value="3:4">3:4 (Portrait 4:3)</option>
-                <option value="2:3">2:3</option>
-                <option value="3:2">3:2</option>
-            </select>
-        </div>
+                            <!-- Aspect Ratio & Seed -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="aspectRatio">
+                                        <i class="fas fa-expand"></i>
+                                        <span data-i18n="aspect_ratio_label">Aspect Ratio</span>
+                                    </label>
+                                    <select id="aspectRatio" class="form-control">
+                                        <option value="1:1" data-i18n="aspect_1_1">1:1 (Kwadrat)</option>
+                                        <option value="16:9" selected data-i18n="aspect_16_9">16:9 (Landscape)</option>
+                                        <option value="9:16" data-i18n="aspect_9_16">9:16 (Portrait)</option>
+                                        <option value="4:3" data-i18n="aspect_4_3">4:3 (Standart)</option>
+                                        <option value="3:4" data-i18n="aspect_3_4">3:4 (Portrait 4:3)</option>
+                                        <option value="2:3">2:3</option>
+                                        <option value="3:2">3:2</option>
+                                    </select>
+                                </div>
 
-        <div class="form-group">
-            <label for="seed">
-                <i class="fas fa-dice"></i>
-                Seed (optional)
-            </label>
-            <input 
-                type="number" 
-                id="seed" 
-                class="form-control" 
-                placeholder="Boş goýuň (random)"
-            >
-        </div>
-    </div>
+                                <div class="form-group">
+                                    <label for="seed">
+                                        <i class="fas fa-dice"></i>
+                                        <span data-i18n="seed_label">Seed</span>
+                                        <span data-i18n="image_url_optional">(optional)</span>
+                                    </label>
+                                    <input 
+                                        type="number" 
+                                        id="seed" 
+                                        class="form-control"
+                                        data-i18n-placeholder="seed_placeholder"
+                                        placeholder="Boş goýuň (random)"
+                                    >
+                                </div>
+                            </div>
 
-    <!-- Submit Button -->
-    <button type="submit" class="btn btn-primary btn-block" id="generateBtn">
-        <i class="fas fa-wand-magic-sparkles"></i>
-        Wideo Döret
-    </button>
-</form>
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn btn-primary btn-block" id="generateBtn">
+                                <i class="fas fa-wand-magic-sparkles"></i>
+                                <span data-i18n="generate_btn">Wideo Döret</span>
+                            </button>
+                        </form>
                     </div>
                 </div>
 
@@ -178,15 +202,15 @@
                 <div class="generator-card">
                     <div class="card-header">
                         <i class="fas fa-eye"></i>
-                        <h3>Netije</h3>
+                        <h3 data-i18n="result">Netije</h3>
                     </div>
                     <div class="card-body">
                         <!-- Preview Placeholder -->
                         <div id="previewArea" class="preview-area">
                             <div class="preview-placeholder">
                                 <i class="fas fa-play-circle"></i>
-                                <p>Wideo döretmek üçin düşündirişi we suraty giriziň</p>
-                                <small>Netije bu ýerde görkeziler</small>
+                                <p data-i18n="preview_text">Wideo döretmek üçin düşündirişi we suraty giriziň</p>
+                                <small data-i18n="preview_subtitle">Netije bu ýerde görkeziler</small>
                             </div>
                         </div>
 
@@ -207,34 +231,36 @@
                                 </div>
                             </div>
                             <div class="progress-info">
-                                <h4>Wideo döredilýär...</h4>
-                                <p id="progressStatus">Başlanýar...</p>
-                                <small>Bu 30-60 sekunt alyp biler</small>
+                                <h4 data-i18n="generating">Wideo döredilýär...</h4>
+                                <p id="progressStatus" data-i18n="starting">Başlanýar...</p>
+                                <small data-i18n="time_estimate">Bu 30-60 sekunt alyp biler</small>
                             </div>
                         </div>
 
                         <!-- Video Player -->
-                       <!-- Video Player - templates/index.html -->
-<div id="videoPlayer" class="video-player" style="display: none;">
-    <video id="resultVideo" controls autoplay></video>
-    <div class="video-info">
-        <p><i class="fas fa-check-circle"></i> Wideo üstünlikli döredildi!</p>
-    </div>
-    <div class="video-actions">
-        <button class="btn btn-secondary" id="downloadBtn">
-            <i class="fas fa-download"></i>
-            Göçür
-        </button>
-        <button class="btn btn-secondary" id="openNewTabBtn" onclick="window.open(currentVideoUrl, '_blank')">
-            <i class="fas fa-external-link-alt"></i>
-            Täze sahypa
-        </button>
-        <button class="btn btn-secondary" onclick="resetGenerator()">
-            <i class="fas fa-redo"></i>
-            Täzeden
-        </button>
-    </div>
-</div>
+                        <div id="videoPlayer" class="video-player" style="display: none;">
+                            <video id="resultVideo" controls autoplay></video>
+                            <div class="video-info">
+                                <p>
+                                    <i class="fas fa-check-circle"></i>
+                                    <span data-i18n="video_ready">Wideo üstünlikli döredildi!</span>
+                                </p>
+                            </div>
+                            <div class="video-actions">
+                                <button class="btn btn-secondary" id="downloadBtn">
+                                    <i class="fas fa-download"></i>
+                                    <span data-i18n="download">Göçür</span>
+                                </button>
+                                <button class="btn btn-secondary" id="openNewTabBtn" onclick="window.open(currentVideoUrl, '_blank')">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    <span data-i18n="new_tab">Täze sahypa</span>
+                                </button>
+                                <button class="btn btn-secondary" onclick="resetGenerator()">
+                                    <i class="fas fa-redo"></i>
+                                    <span data-i18n="reset">Täzeden</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -245,14 +271,19 @@
     <section class="history-section" id="history">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Wideo <span class="gradient-text">Taryhy</span></h2>
-                <p class="section-subtitle">Döredilen wideolaryň sanawy</p>
+                <h2 class="section-title">
+                    <span data-i18n="history_title">Wideo</span>
+                    <span class="gradient-text" data-i18n="history_title_highlight">Taryhy</span>
+                </h2>
+                <p class="section-subtitle" data-i18n="history_subtitle">
+                    Döredilen wideolaryň sanawy
+                </p>
             </div>
 
             <div id="historyGrid" class="history-grid">
                 <div class="loading-spinner">
                     <i class="fas fa-spinner fa-spin"></i>
-                    <p>Ýüklenýär...</p>
+                    <p data-i18n="loading">Ýüklenýär...</p>
                 </div>
             </div>
         </div>
@@ -263,8 +294,11 @@
         <div class="container">
             <div class="about-content">
                 <div class="about-text">
-                    <h2>AI Video Generator <span class="gradient-text">Barada</span></h2>
-                    <p class="about-description">
+                    <h2>
+                        <span data-i18n="about_title">AI Video Generator</span>
+                        <span class="gradient-text" data-i18n="about_title_highlight">Barada</span>
+                    </h2>
+                    <p class="about-description" data-i18n="about_description">
                         Bu professional web programma Higgsfield AI API ulanyp, 
                         suratlardan ajaýyp wideoler döredýär. AI tehnologiýasy bilen 
                         islendik suraty janly wideolara öwürýär.
@@ -273,29 +307,29 @@
                         <li>
                             <i class="fas fa-check-circle"></i>
                             <div>
-                                <strong>Çalt we ýokary hilli</strong>
-                                <p>30-60 sekuntda professional wideo</p>
+                                <strong data-i18n="feature_1_title">Çalt we ýokary hilli</strong>
+                                <p data-i18n="feature_1_desc">30-60 sekuntda professional wideo</p>
                             </div>
                         </li>
                         <li>
                             <i class="fas fa-check-circle"></i>
                             <div>
-                                <strong>Dürli motion effektleri</strong>
-                                <p>Zoom, pan, rotate we beýleki hereket görnüşleri</p>
+                                <strong data-i18n="feature_2_title">Dürli motion effektleri</strong>
+                                <p data-i18n="feature_2_desc">Zoom, pan, rotate we beýleki hereket görnüşleri</p>
                             </div>
                         </li>
                         <li>
                             <i class="fas fa-check-circle"></i>
                             <div>
-                                <strong>AI-powered enhancement</strong>
-                                <p>Prompt awtomatik gowulandyrma funksiýasy</p>
+                                <strong data-i18n="feature_3_title">AI-powered enhancement</strong>
+                                <p data-i18n="feature_3_desc">Prompt awtomatik gowulandyrma funksiýasy</p>
                             </div>
                         </li>
                         <li>
                             <i class="fas fa-check-circle"></i>
                             <div>
-                                <strong>Aňsat ulanmak</strong>
-                                <p>Sazlaşdyryş geregi ýok, derrew ulanyň</p>
+                                <strong data-i18n="feature_4_title">Aňsat ulanmak</strong>
+                                <p data-i18n="feature_4_desc">Sazlaşdyryş geregi ýok, derrew ulanyň</p>
                             </div>
                         </li>
                     </ul>
@@ -306,21 +340,21 @@
                             <i class="fas fa-video"></i>
                         </div>
                         <h3 id="totalVideos">0</h3>
-                        <p>Döredilen Wideo</p>
+                        <p data-i18n="stat_videos">Döredilen Wideo</p>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon">
                             <i class="fas fa-clock"></i>
                         </div>
-                        <h3>30-60s</h3>
-                        <p>Orta döretme wagty</p>
+                        <h3 data-i18n="stat_time_value">30-60s</h3>
+                        <p data-i18n="stat_time">Orta döretme wagty</p>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon">
                             <i class="fas fa-star"></i>
                         </div>
                         <h3>4.9</h3>
-                        <p>Ulanyjy reýtingi</p>
+                        <p data-i18n="stat_rating">Ulanyjy reýtingi</p>
                     </div>
                 </div>
             </div>
@@ -331,37 +365,37 @@
     <section class="features-section">
         <div class="container">
             <div class="section-header">
-                <h2 class="section-title">Aýratynlyklar</h2>
-                <p class="section-subtitle">Näme edip bilýärsiňiz?</p>
+                <h2 class="section-title" data-i18n="features_title">Aýratynlyklar</h2>
+                <p class="section-subtitle" data-i18n="features_subtitle">Näme edip bilýärsiňiz?</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-wand-magic-sparkles"></i>
                     </div>
-                    <h3>AI Magic</h3>
-                    <p>Suratlaryňyzy janly wideolara öwürýär</p>
+                    <h3 data-i18n="ai_magic">AI Magic</h3>
+                    <p data-i18n="ai_magic_desc">Suratlaryňyzy janly wideolara öwürýär</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-sliders"></i>
                     </div>
-                    <h3>Sazlamalar</h3>
-                    <p>Model, motion we beýleki opsiýalary sazlaň</p>
+                    <h3 data-i18n="settings_feature">Sazlamalar</h3>
+                    <p data-i18n="settings_desc">Model, motion we beýleki opsiýalary sazlaň</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-download"></i>
                     </div>
-                    <h3>Download</h3>
-                    <p>Wideolaryňyzy ýokary hilinde göçüriň</p>
+                    <h3 data-i18n="download_feature">Download</h3>
+                    <p data-i18n="download_desc">Wideolaryňyzy ýokary hilinde göçüriň</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-history"></i>
                     </div>
-                    <h3>Taryh</h3>
-                    <p>Öňki wideolaryňyzy saklaň we görmek</p>
+                    <h3 data-i18n="history_feature">Taryh</h3>
+                    <p data-i18n="history_desc">Öňki wideolaryňyzy saklaň we görmek</p>
                 </div>
             </div>
         </div>
@@ -373,17 +407,17 @@
             <div class="footer-content">
                 <div class="footer-brand">
                     <i class="fas fa-video"></i>
-                    <span>AI Video Generator</span>
+                    <span data-i18n="app_title">AI Video Generator</span>
                 </div>
                 <div class="footer-links">
-                    <a href="#home">Baş sahypa</a>
-                    <a href="#generator">Generator</a>
-                    <a href="#history">Taryh</a>
-                    <a href="#about">Barada</a>
+                    <a href="#home" data-i18n="home">Baş sahypa</a>
+                    <a href="#generator" data-i18n="generator">Generator</a>
+                    <a href="#history" data-i18n="history">Taryh</a>
+                    <a href="#about" data-i18n="about">Barada</a>
                 </div>
                 <div class="footer-text">
-                    <p>&copy; 2025 AI Video Generator. Ähli hukuklar goragly.</p>
-                    <p>Powered by Higgsfield AI | Merdan tarapyndan döredildi</p>
+                    <p>&copy; 2025 AI Video Generator. <span data-i18n="footer_rights">Ähli hukuklar goragly.</span></p>
+                    <p data-i18n="powered_by">Powered by Higgsfield AI | Merdan tarapyndan döredildi</p>
                 </div>
                 <div class="footer-social">
                     <a href="#" class="social-link"><i class="fab fa-github"></i></a>
@@ -394,15 +428,17 @@
         </div>
     </footer>
 
-    <!-- Scroll to Top Button -->
+    <!-- Scroll to Top -->
     <button id="scrollTop" class="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
         <i class="fas fa-arrow-up"></i>
     </button>
 
+    <!-- Scripts -->
+    <script src="{{ url_for('static', filename='js/translations.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     
     <script>
-        // Scroll to top button visibility
+        // Scroll to top button
         window.addEventListener('scroll', function() {
             const scrollTop = document.getElementById('scrollTop');
             if (window.pageYOffset > 300) {
@@ -432,6 +468,11 @@
                     link.classList.add('active');
                 }
             });
+        });
+        
+        // Initialize translations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updatePageLanguage();
         });
     </script>
 </body>

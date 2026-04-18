@@ -245,7 +245,7 @@ body {
 
 .btn-secondary {
     background: rgba(255, 255, 255, 0.1);
-    color: white;
+    color: rgb(20, 7, 7);
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -708,4 +708,275 @@ textarea.form-control {
     .history-grid {
         grid-template-columns: 1fr;
     }
+}
+/* style.css - Language Switcher-i täzeläň */
+
+/* Language Switcher */
+.language-switcher {
+    display: flex;
+    gap: 0.5rem;
+    margin-left: 1.5rem;
+    padding: 0.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.lang-btn {
+    display: flex;
+    height: 30px;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    background: transparent;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    color: var(--light);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 300;
+    font-size: 0.2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover effect */
+.lang-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(99, 102, 241, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.4s, height 0.4s;
+}
+
+.lang-btn:hover::before {
+    width: 200%;
+    height: 200%;
+}
+
+.lang-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(99, 102, 241, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Active state */
+.lang-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: transparent;
+    color: white;
+    box-shadow: 
+        0 4px 15px rgba(99, 102, 241, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px) scale(1.05);
+}
+
+.lang-btn.active::before {
+    display: none;
+}
+
+/* Flag emoji */
+.lang-btn .flag {
+    font-size: 1.4rem;
+    line-height: 1;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+    transition: transform 0.3s ease;
+}
+
+.lang-btn:hover .flag {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.lang-btn.active .flag {
+    transform: scale(1.15);
+    animation: flagWave 0.6s ease-in-out;
+}
+
+/* Language code text */
+.lang-btn .lang-code {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+/* Flag wave animation */
+@keyframes flagWave {
+    0%, 100% { transform: scale(1.15) rotate(0deg); }
+    25% { transform: scale(1.2) rotate(-10deg); }
+    75% { transform: scale(1.2) rotate(10deg); }
+}
+
+/* Pulse effect on active */
+.lang-btn.active {
+    animation: langPulse 2s ease-in-out infinite;
+}
+
+@keyframes langPulse {
+    0%, 100% { 
+        box-shadow: 
+            0 4px 15px rgba(99, 102, 241, 0.4),
+            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    50% { 
+        box-shadow: 
+            0 6px 20px rgba(99, 102, 241, 0.6),
+            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    }
+}
+
+/* Tooltip */
+.lang-btn::after {
+    content: attr(title);
+    position: absolute;
+    bottom: -35px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    background: rgba(30, 41, 59, 0.95);
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.lang-btn:hover::after {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .language-switcher {
+        margin-left: 0.5rem;
+        gap: 0.25rem;
+        padding: 0.2rem;
+    }
+    
+    .lang-btn {
+        padding: 0.5rem 0.8rem;
+    }
+    
+    .lang-btn .lang-code {
+        display: none;
+    }
+    
+    .lang-btn .flag {
+        font-size: 1.2rem;
+    }
+    
+    .lang-btn::after {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .language-switcher {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        z-index: 999;
+        flex-direction: column;
+        background: rgba(30, 41, 59, 0.95);
+        backdrop-filter: blur(20px);
+        padding: 0.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    .lang-btn {
+        padding: 0.6rem;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        justify-content: center;
+    }
+    
+    .lang-btn .flag {
+        font-size: 1.5rem;
+    }
+}
+
+/* Glass morphism effect */
+@supports (backdrop-filter: blur(10px)) {
+    .language-switcher {
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+}
+
+/* Dark mode navbar uchun */
+.navbar {
+    background: rgba(248, 250, 252, 0.9);
+    border-bottom: 1px solid rgba(30, 41, 59, 0.1);
+}
+
+/* Navbar dark mode support */
+@media (prefers-color-scheme: dark) {
+    /* .navbar {
+        background: rgba(30, 41, 59, 0.9);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    } */
+    
+    .language-switcher {
+        background: rgba(255, 255, 255, 0.05);
+    }
+    
+    .lang-btn {
+        color: #4395e7;
+    }
+}
+
+/* Focus state (accessibility) */
+.lang-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5);
+}
+
+.lang-btn:focus:not(:active) {
+    border-color: var(--primary);
+}
+
+/* Disabled state (eger geljekde gerek bolsa) */
+.lang-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.lang-btn:disabled:hover {
+    background: transparent;
+    border-color: transparent;
+}
+
+/* Loading state animation */
+.lang-btn.loading {
+    pointer-events: none;
+}
+
+.lang-btn.loading .flag {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Smooth transition for language switch */
+[data-i18n], [data-i18n-placeholder] {
+    transition: opacity 0.2s ease;
+}
+
+.language-switching [data-i18n],
+.language-switching [data-i18n-placeholder] {
+    opacity: 0.7;
 }
